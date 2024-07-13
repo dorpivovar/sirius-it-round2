@@ -63,5 +63,8 @@
 <p class="object-description">
     {{ object.description }}
 </p>
+{% if current_user.is_authenticated %}
+<a type="button" class="btn btn-primary" href="/feedback/{{ object.id }}">Добавить отзыв</a>
+{% endif %}
 
 {% endblock %}

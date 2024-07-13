@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+       
+    .container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 1rem;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+    .form-group textarea,
+    .form-group input {
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .form-group textarea {
+        height: 100px;
+        resize: vertical;
+    }
+    .form-group button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    .form-group button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<!-- <div class="container"> -->
+    <h2>Добавить отзыв</h2>
+    <form id="reviewForm" action="/feedback/{{ id }}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="rating">Оценка:</label>
+            <input class='form-control mb-2' type="number" id="rating" name="rating" min="1" max="5" required>
+        </div>
+        <div class="form-group">
+            <label for="comment">Отзыв:</label>
+            <textarea id="comment" name="comment" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="photos">Фотографии:</label>
+            <input type="file" id="photos" name="photos" accept="image/*" multiple>
+        </div>
+        <div class="form-group">
+            <button type="submit">Добавить отзыв</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

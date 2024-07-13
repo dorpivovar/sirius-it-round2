@@ -1,9 +1,11 @@
 import os
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from data import db_session
 from forms.user import RegisterForm, LoginForm
+from forms.review import FeedbackForm
 from data.users import User
 from data.objects import Object
+from data.reviews import Review
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 
@@ -77,10 +79,40 @@ def object(id):
     db_sess = db_session.create_session()
     object = db_sess.query(Object).filter(Object.id == id).first()
     images = object.images.split(',')
-    print(images)
-    return render_template('object.html', object=object, images=images, name=current_user.name)
+    # feedbacks = db_sess.query(Review).filter(Review.object_id == id).all()
+    if current_user.is_authenticated:     
+        return render_template('object.html', object=object, images=images, name=current_user.name)
+    else:
+        return render_template('object.html', object=object, images=images)
+@app.route('/feedback/<int:id>', methods=['GET', 'POST'])
+def feedback(id):
+    if request.method == 'POST':
+        db_sess = db_session.create_session()
+     
+        rating = request.form['rating']
+        comment = request.form['comment']
+        photos = request.files.getlist('photos')
 
+        photo_filenames = []
+        for photo in photos:
+            if photo.filename != '':
+                filename = photo.filename
+                photo.save(os.path.join('static/images/', filename))
+                photo_filenames.append(filename)
+        print(photo_filenames)
+        feedback = Review(
+            rating=rating,
+            text=comment,
+            object_id=id,
+            user_id=current_user.id,
+            images=', '.join(photo_filenames)
+        )
+        
+        db_sess.add(feedback)
+        db_sess.commit()
+        return redirect('/')
 
+    return render_template('feedback.html', id=id)
 
 def main():
     db_session.global_init("db/database.db")

@@ -16,3 +16,4 @@ class Review(SqlAlchemyBase, UserMixin, SerializerMixin):
                             sqlalchemy.ForeignKey("objects.id"))
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                              sqlalchemy.ForeignKey("users.id"))
+    images = sqlalchemy.Column(sqlalchemy.String, nullable=True)
