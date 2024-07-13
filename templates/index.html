@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="search-container">
+    <input type="text" id="search-box" onkeyup="searchObjects()" placeholder="Поиск по объектам...">
+</div>
+
+<div id="content">
+    {% for object, image in obj_img %}
+    <div class="card" style="width: 18rem;">
+        <img src="../static/images/{{ image }}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{ object.title }}</h5>
+          
+          <a href="/object/{{ object.id }}" class="btn btn-primary">Перейти</a>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+
+<script>
+    function searchObjects() {
+        const input = document.getElementById('search-box');
+        const filter = input.value.toLowerCase();
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            const name = card.getAttribute('data-name').toLowerCase();
+            if (name.includes(filter)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function redirectTo(url) {
+        window.location.href = url;
+    }
+</script>
+
+{% endblock %}

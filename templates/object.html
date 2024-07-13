@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .object-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    .object-title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .object-rating {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 1rem;
+    }
+    .object-description {
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+</style>
+</head>
+<body>
+
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+        {% for image in images %}
+          <div class="carousel-item active">
+            <img src="../static/images/{{ image }}" class="d-block w-100" alt="...">
+          </div>
+          <!-- <div class="carousel-item">
+            <img src="../static/images/ekotropa_ring.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../static/images/nature_karaugom.jpg" class="d-block w-100" alt="...">
+          </div> -->
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Предыдущий</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Следующий</span>
+        </button>
+      </div>
+<h1 class="object-title">{{ object.title }}</h1>
+<div class="object-rating">
+    Рейтинг: <span id="rating">{{ object.rating }}</span>
+</div>
+<p class="object-description">
+    {{ object.description }}
+</p>
+
+{% endblock %}
