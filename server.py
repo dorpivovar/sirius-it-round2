@@ -6,6 +6,8 @@ from forms.review import FeedbackForm
 from data.users import User
 from data.objects import Object
 from data.reviews import Review
+from data.events import Event
+from data.disposal import Disposal
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 
@@ -119,6 +121,53 @@ def feedback(id):
         return redirect('/')
 
     return render_template('feedback.html', id=id)
+
+
+@app.route('/disposal')
+def disposal():
+    db_sess = db_session.create_session()
+    disposals = db_sess.query(Disposal).all()
+    # print(disposals[0].images)
+    images = [disposal.images.split(',')[0] for disposal in disposals]
+    print(images)
+    dis_img = zip(disposals, images)
+    if current_user.is_authenticated:
+        return render_template('disposal.html', dis_img=dis_img, name=current_user.name)
+    else:
+        return render_template('disposal.html', dis_img=dis_img)
+
+@app.route('/dis/<int:id>', methods=['GET', 'POST'])
+def dis(id):
+    db_sess = db_session.create_session()
+    disposal = db_sess.query(Disposal).filter(Disposal.id == id).first()
+    images = disposal.images.split(', ')
+    if current_user.is_authenticated:
+        return render_template('dis.html', disposal=disposal, images=images, name=current_user.name)
+    else:
+        return render_template('dis.html', disposal=disposal, images=images)
+
+
+@app.route('/events')
+def events():
+    db_sess = db_session.create_session()
+    events = db_sess.query(Event).all()
+    images = [event.images.split(',')[0] for event in events]
+    evn_img = zip(events, images)
+    if current_user.is_authenticated:
+        return render_template('events.html', evn_img=evn_img, name=current_user.name)
+    else:
+        return render_template('events.html', evn_img=evn_img)
+
+
+@app.route('/event/<int:id>', methods=['GET', 'POST'])
+def event(id):
+    db_sess = db_session.create_session()
+    event = db_sess.query(Event).filter(Event.id == id).first()
+    images = event.images.split(', ')
+    if current_user.is_authenticated:
+        return render_template('event.html', event=event, images=images, name=current_user.name)
+    else:
+        return render_template('event.html', event=event, images=images)
 
 def main():
     db_session.global_init("db/database.db")

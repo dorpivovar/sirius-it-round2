@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .object-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    .object-title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .object-rating {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 1rem;
+    }
+    .object-description {
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    .carousel-item img {
+        width: 100%;
+        border-radius: 8px;
+    }
+    .review-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .review-card img {
+        max-width: 100px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+    .review-card h5 {
+        margin-bottom: 0.5rem;
+    }
+</style>
+
+<div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+        {% for image in images %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <img src="../static/images/{{ image }}" class="d-block w-100" alt="...">
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Следующий</span>
+    </button>
+</div>
+
+<h1 class="object-title">{{ disposal.title }}</h1>
+
+
+<p>
+    {{ disposal.address }}
+
+</p>
+<p>
+    {{ disposal.phone }}
+</p>
+<p class="object-description">
+    {{ disposal.description }}
+</p>
+
+
+
+{% endblock %}
