@@ -78,7 +78,7 @@ def object(id):
     object = db_sess.query(Object).filter(Object.id == id).first()
     images = object.images.split(',')
     print(images)
-    return render_template('object.html', object=object, images=images)
+    return render_template('object.html', object=object, images=images, name=current_user.name)
 
 
 
