@@ -79,11 +79,13 @@ def object(id):
     db_sess = db_session.create_session()
     object = db_sess.query(Object).filter(Object.id == id).first()
     images = object.images.split(',')
-    # feedbacks = db_sess.query(Review).filter(Review.object_id == id).all()
+    feedbacks = db_sess.query(Review).filter(Review.object_id == id).all()
     if current_user.is_authenticated:     
-        return render_template('object.html', object=object, images=images, name=current_user.name)
+        return render_template('object.html', object=object, images=images, name=current_user.name, reviews=feedbacks)
     else:
-        return render_template('object.html', object=object, images=images)
+        return render_template('object.html', object=object, images=images, reviews=feedbacks)
+    
+
 @app.route('/feedback/<int:id>', methods=['GET', 'POST'])
 def feedback(id):
     if request.method == 'POST':
@@ -109,6 +111,10 @@ def feedback(id):
         )
         
         db_sess.add(feedback)
+        object = db_sess.query(Object).filter(Object.id == id).first()
+        ratings = [int(rew.rating) for rew in db_sess.query(Review).filter(Review.object_id == id).all()]
+        rating = sum(ratings) / len(ratings)
+        object.rating = rating
         db_sess.commit()
         return redirect('/')
 
