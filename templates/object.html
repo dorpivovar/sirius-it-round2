@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<title>{{ object.title }}</title>
 <style>
     .container {
         max-width: 800px;
@@ -70,10 +71,49 @@
 
 <h1 class="object-title">{{ object.title }}</h1>
 <div class="object-rating">
+    {{ category.title }}
+</div>
+<div class="object-rating">
+    {% if object.rating is none or object.rating == '' %}
+    Рейтинг: <span id="rating">Нет данных</span>
+    {% else %}
     Рейтинг: <span id="rating">{{ object.rating }}</span>
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if object.address is none or object.address == '' %}
+    Адрес: нет данных
+    {% else %}
+    Адрес: {{ object.address }}
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if object.phone is none or object.phone == '' %}
+    Номер телефона: нет данных
+    {% else %}
+    Номер телефона: {{ object.phone }}
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if object.website is none or object.website == '' %}
+    Веб-сайт: нет данных
+    {% else %}
+    Веб-сайт: <a href="{{ object.website }}">клик</a>
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if object.maps_url is none or object.maps_url == '' %}
+    Онлайн-карты: нет данных
+    {% else %}
+    Онлайн-карты: <a href="{{ object.maps_url }}">клик</a>
+    {% endif %}
 </div>
 <p class="object-description">
+    {% if object.description is none or object.description == '' %}
     {{ object.description }}
+    {% else %}
+    Нет описания
+    {% endif %}
 </p>
 
 {% if current_user.is_authenticated %}

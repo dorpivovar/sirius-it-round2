@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<title>{{ event.title }}</title>
 <style>
     .container {
         max-width: 800px;
@@ -70,18 +71,40 @@
 
 <h1 class="object-title">{{ event.title }}</h1>
 
-
-<p>
-    {{ event.address }}
-
-</p>
-<p>
-    {{ event.phone }}
-</p>
+<div class="object-rating">
+    {% if event.address %}
+        Адрес: {{ event.address }}
+    {% else %}
+        Адрес: нет данных
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if event.phone %}
+        Номер телефона: {{ event.phone }}
+    {% else %}
+        Номер телефона: нет данных
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if event.website is none or event.website == '' %}
+    Веб-сайт: нет данных
+    {% else %}
+    Веб-сайт: <a href="{{ event.website }}">клик</a>
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if event.maps_url is none or event.maps_url == '' %}
+    Онлайн-карты: нет данных
+    {% else %}
+    Онлайн-карты: <a href="{{ event.maps_url }}">клик</a>
+    {% endif %}
+</div>
 <p class="object-description">
-    {{ event.description }}
+    {% if event.description %}
+        {{ event.description }}
+    {% else %}
+        Нет описания
+    {% endif %}
 </p>
-
-
 
 {% endblock %}

@@ -80,12 +80,13 @@ def logout():
 def object(id):
     db_sess = db_session.create_session()
     object = db_sess.query(Object).filter(Object.id == id).first()
+    category = db_sess.query(Category).filter(Category.id == object.category_id).first()
     images = object.images.split(', ')
     feedbacks = db_sess.query(Review).filter(Review.object_id == id).all()
     if current_user.is_authenticated:     
-        return render_template('object.html', object=object, images=images, name=current_user.name, reviews=feedbacks)
+        return render_template('object.html', object=object, images=images, name=current_user.name, reviews=feedbacks, category=category)
     else:
-        return render_template('object.html', object=object, images=images, reviews=feedbacks)
+        return render_template('object.html', object=object, images=images, reviews=feedbacks, category=category)
     
 
 @app.route('/feedback/<int:id>', methods=['GET', 'POST'])

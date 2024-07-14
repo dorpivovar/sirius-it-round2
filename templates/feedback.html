@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<title>Добавление отзыва</title>
 <style>
        
     .container {
@@ -46,7 +47,6 @@
     }
 </style>
 
-<!-- <div class="container"> -->
     <h2>Добавить отзыв</h2>
     <form id="reviewForm" action="/feedback/{{ id }}" method="post" enctype="multipart/form-data">
         <div class="form-group">

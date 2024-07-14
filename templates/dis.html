@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<title>{{ disposal.title }}</title>
 <style>
     .container {
         max-width: 800px;
@@ -70,18 +71,40 @@
 
 <h1 class="object-title">{{ disposal.title }}</h1>
 
-
-<p>
-    {{ disposal.address }}
-
-</p>
-<p>
-    {{ disposal.phone }}
-</p>
+<div class="object-rating">
+    {% if disposal.address %}
+        Адрес: {{ disposal.address }}
+    {% else %}
+        Адрес: нет данных
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if disposal.phone %}
+        Номер телефона: {{ disposal.phone }}
+    {% else %}
+        Номер телефона: нет данных
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if disposal.website is none or disposal.website == '' %}
+    Веб-сайт: нет данных
+    {% else %}
+    Веб-сайт: <a href="{{ disposal.website }}">клик</a>
+    {% endif %}
+</div>
+<div class="object-rating">
+    {% if disposal.maps_url is none or disposal.maps_url == '' %}
+    Онлайн-карты: нет данных
+    {% else %}
+    Онлайн-карты: <a href="{{ disposal.maps_url }}">клик</a>
+    {% endif %}
+</div>
 <p class="object-description">
-    {{ disposal.description }}
+    {% if disposal.description %}
+        {{ disposal.description }}
+    {% else %}
+        Нет описания
+    {% endif %}
 </p>
-
-
 
 {% endblock %}
