@@ -110,9 +110,10 @@
 </div>
 <p class="object-description">
     {% if object.description is none or object.description == '' %}
-    {{ object.description }}
-    {% else %}
     Нет описания
+    
+    {% else %}
+    {{ object.description }}
     {% endif %}
 </p>
 
