@@ -14,11 +14,10 @@ class Disposal(SqlAlchemyBase, UserMixin, SerializerMixin):
                            primary_key=True, autoincrement=True)
     title = sqlalchemy.Column(sqlalchemy.String)
     address = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    rating = sqlalchemy.Column(sqlalchemy.Float, nullable=True)
+    
     phone = sqlalchemy.Column(sqlalchemy.String, nullable=True)
 
     images = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     website = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     description = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     maps_url = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    reviews_id = sqlalchemy.Column(sqlalchemy.String, nullable=True)

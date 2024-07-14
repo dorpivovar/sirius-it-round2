@@ -22,4 +22,3 @@ class Object(SqlAlchemyBase, UserMixin, SerializerMixin):
     website = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     description = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     maps_url = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    reviews_id = sqlalchemy.Column(sqlalchemy.String, nullable=True)
