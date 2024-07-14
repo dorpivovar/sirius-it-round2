@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .object-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    .object-title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    .object-rating {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 1rem;
+    }
+    .object-description {
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+    .carousel-item img {
+        width: 100%;
+        border-radius: 8px;
+    }
+    .review-card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .review-card img {
+        max-width: 100px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+    .review-card h5 {
+        margin-bottom: 0.5rem;
+    }
+</style>
+    <form method="POST" action="/add">
+        <select class="form-select" aria-label="Пример выбора по умолчанию" name="val" id="val">
+            <option selected value="1">Экологический объект</option>
+            <option value="2">Мероприятие</option>
+            <option value="3">Пункт утилизации</option>
+        </select>
+        <div class="form-group" style="margin-top: 10px">
+            <button type="submit" class="btn btn-primary">Выбрать</button>
+        </div>
+    </form>
+{% endblock %}

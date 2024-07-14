@@ -18,11 +18,12 @@
             
             <a class="btn btn-outline-danger" style="margin-left: 10px; text-align: center;" href="/logout">Выход</a>
             <a style="margin-left: 10px; text-align: center; color:black;">{{ name }}</a>
-    
             <a class="nav-link active" aria-current="page" style="margin-left: 10px; text-align: center;" href="/">Экологические объекты</a>
             <a class="nav-link active" aria-current="page" style="margin-left: 10px; text-align: center;" href="/disposal">Пункты утилизации</a>
             <a class="nav-link active" aria-current="page" style="margin-left: 10px; text-align: center;" href="/events">Мероприятия</a>
-        
+            {% if current_user.user_level == 'admin' %}
+                <a class="nav-link active" aria-current="page" style="margin-left: 10px; text-align: center;" href="/add">Добавить данные</a>
+            {% endif %}
             
         </div>
         
@@ -30,6 +31,9 @@
         <div class="d-flex flex-row-reverse">
             <a class="btn btn-success" style="margin-left: 10px; text-align: center;" href="/login">Вход</a>
             <a class="btn btn-primary" style="margin-left: 10px; text-align: center;" href="/register">Зарегистрироваться</a>
+            <a class="nav-link active" aria-current="page" style="margin-left: 10px; text-align: center;" href="/">Экологические объекты</a>
+            <a class="nav-link active" aria-current="page" style="margin-left: 10px; text-align: center;" href="/disposal">Пункты утилизации</a>
+            <a class="nav-link active" aria-current="page" style="margin-left: 10px; text-align: center;" href="/events">Мероприятия</a>
 
             <!--            <div class="p-2">Флекс элемент 3</div>-->
         </div>

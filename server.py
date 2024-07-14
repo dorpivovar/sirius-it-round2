@@ -8,12 +8,12 @@ from data.objects import Object
 from data.reviews import Review
 from data.events import Event
 from data.disposal import Disposal
+from data.categories import Category
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret_key'
-# app.config['AVATAR_UPLOAD_PATH'] = os.path.join(os.getcwd(), 'static', 'images', 'avatar')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -80,7 +80,7 @@ def logout():
 def object(id):
     db_sess = db_session.create_session()
     object = db_sess.query(Object).filter(Object.id == id).first()
-    images = object.images.split(',')
+    images = object.images.split(', ')
     feedbacks = db_sess.query(Review).filter(Review.object_id == id).all()
     if current_user.is_authenticated:     
         return render_template('object.html', object=object, images=images, name=current_user.name, reviews=feedbacks)
@@ -127,7 +127,6 @@ def feedback(id):
 def disposal():
     db_sess = db_session.create_session()
     disposals = db_sess.query(Disposal).all()
-    # print(disposals[0].images)
     images = [disposal.images.split(',')[0] for disposal in disposals]
     print(images)
     dis_img = zip(disposals, images)
@@ -168,6 +167,159 @@ def event(id):
         return render_template('event.html', event=event, images=images, name=current_user.name)
     else:
         return render_template('event.html', event=event, images=images)
+
+
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        db_sess = db_session.create_session()
+
+        val = request.form.get('val')
+        print(val)
+        if int(val) == 1:
+            return redirect('/add_object')        
+        if int(val) == 2:
+            return redirect('/add_event')
+        if int(val) == 3:
+            return redirect('/add_disposal')
+        return redirect('/')
+
+    return render_template('add.html', name=current_user.name)
+
+
+@app.route('/add_object', methods=['GET', 'POST'])
+def add_object():
+    db_sess = db_session.create_session()
+    categories = db_sess.query(Category).all()
+    if request.method == 'POST':
+        
+
+        title = request.form['title']
+        address = request.form['address']
+        phone = request.form['phone']
+        category_id = request.form.get('val')
+        website = request.form['website']
+        description = request.form['descpription']
+        maps_url = request.form['maps-url']
+
+        photos = request.files.getlist('photos')
+
+        photo_filenames = []
+        for photo in photos:
+            if photo.filename != '':
+                filename = photo.filename
+                photo.save(os.path.join('static/images/', filename))
+                photo_filenames.append(filename)
+
+        print(photo_filenames)
+
+        object = Object(
+            title=title,
+            address=address,
+            phone=phone,
+            category_id=category_id,
+            website=website,
+            description=description,
+            maps_url=maps_url,
+            images=', '.join(photo_filenames)
+        )
+
+
+        db_sess.add(object)
+        db_sess.commit()
+        return redirect('/')
+
+
+    return render_template('add_object.html', categories=categories)
+
+
+@app.route('/add_event', methods=['GET', 'POST'])
+def add_event():
+    db_sess = db_session.create_session()
+    categories = db_sess.query(Category).all()
+    if request.method == 'POST':
+        
+
+        title = request.form['title']
+        address = request.form['address']
+        phone = request.form['phone']
+        website = request.form['website']
+        description = request.form['descpription']
+        maps_url = request.form['maps-url']
+
+        photos = request.files.getlist('photos')
+
+        photo_filenames = []
+        for photo in photos:
+            if photo.filename != '':
+                filename = photo.filename
+                photo.save(os.path.join('static/images/', filename))
+                photo_filenames.append(filename)
+
+        print(photo_filenames)
+
+        event = Event(
+            title=title,
+            address=address,
+            phone=phone,
+            website=website,
+            description=description,
+            maps_url=maps_url,
+            images=', '.join(photo_filenames)
+        )
+
+
+        db_sess.add(event)
+        db_sess.commit()
+        return redirect('/events')
+
+
+    return render_template('add_event.html')
+
+@app.route('/add_disposal', methods=['GET', 'POST'])
+def add_disposal():
+    db_sess = db_session.create_session()
+    categories = db_sess.query(Category).all()
+    if request.method == 'POST':
+
+
+        title = request.form['title']
+        address = request.form['address']
+        phone = request.form['phone']
+        website = request.form['website']
+        description = request.form['descpription']
+        maps_url = request.form['maps-url']
+
+        photos = request.files.getlist('photos')
+
+        photo_filenames = []
+        for photo in photos:
+            if photo.filename != '':
+                filename = photo.filename
+                photo.save(os.path.join('static/images/', filename))
+                photo_filenames.append(filename)
+
+        print(photo_filenames)
+
+        disposal = Disposal(
+            title=title,
+            address=address,
+            phone=phone,
+            website=website,
+            description=description,
+            maps_url=maps_url,
+            images=', '.join(photo_filenames)
+        )
+
+
+        db_sess.add(disposal)
+        db_sess.commit()
+        return redirect('/disposal')
+
+
+    return render_template('add_disposal.html')
+
+
 
 def main():
     db_session.global_init("db/database.db")
