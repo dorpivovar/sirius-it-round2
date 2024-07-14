@@ -2,7 +2,6 @@ import os
 from flask import Flask, render_template, redirect, request
 from data import db_session
 from forms.user import RegisterForm, LoginForm
-from forms.review import FeedbackForm
 from data.users import User
 from data.objects import Object
 from data.reviews import Review
