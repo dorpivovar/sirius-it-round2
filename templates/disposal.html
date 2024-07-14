@@ -12,7 +12,11 @@
         <img src="../static/images/{{ image }}" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title">{{ dis.title }}</h5>
-          <a href="/dis/{{ dis.id }}" class="btn btn-primary">Перейти</a>
+          <h6>{{ dis.address }}</h6>
+          <h6>{{ dis.phone }}</h6>
+          <h6>{{ dis.description }}</h6>
+          <a href="{{ dis.website }}" class="btn btn-primary">Перейти</a>
+          <a href="{{ dis.maps_url }}" class="btn btn-primary">На карте</a>
         </div>
     </div>
     {% endfor %}
